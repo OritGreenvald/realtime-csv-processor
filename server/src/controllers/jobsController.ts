@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import Job from '../models/Job';
+import path from 'path';
 import { processCSVFile } from '../services/jobsService';
 
 export const uploadCSV = async (req: Request, res: Response) => {
@@ -9,7 +10,10 @@ export const uploadCSV = async (req: Request, res: Response) => {
     const job = new Job({ filename: req.file.filename, status: 'pending' });
     await job.save();
 
-    processCSVFile(job._id.toString(), req.file.filename); 
+    // processCSVFile(job._id.toString(), req.file.filename); 
+    const filePath = path.join(__dirname, '../uploads', req.file.filename);
+
+processCSVFile(job._id.toString(), filePath);
 
     res.status(200).json({ message: 'Job created', jobId: job._id });
   } catch (err) {
