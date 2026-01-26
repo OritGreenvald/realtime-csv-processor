@@ -9,9 +9,8 @@ export const uploadCSV = async (req: Request, res: Response) => {
 
     const job = new Job({ filename: req.file.filename, status: 'pending' });
     await job.save();
+    const filePath = path.join(process.cwd(), 'uploads', req.file.filename);
 
-    // processCSVFile(job._id.toString(), req.file.filename); 
-    const filePath = path.join(__dirname, '../uploads', req.file.filename);
 
 processCSVFile(job._id.toString(), filePath);
 
