@@ -30,10 +30,18 @@ const JobDetails: React.FC<Props> = ({ jobId }) => {
       <p>Processed Rows: {job.processedRows}</p>
       <p>Success: {job.successCount}</p>
       <p>Failed: {job.failedCount}</p>
+
       {job.errorList.length > 0 && (
         <ul>
           {job.errorList.map((err, idx) => (
-            <li key={idx}>Row {err.row}: {err.error}</li>
+            <li key={idx} style={{ marginBottom: '8px' }}>
+              <strong>Row {err.rowNumber}</strong><br />
+              Error: {err.error}<br />
+              Name: {err.name}<br />
+              Email: {err.email}<br />
+              Phone: {err.phone || '—'}<br />
+              Company: {err.company}
+            </li>
           ))}
         </ul>
       )}

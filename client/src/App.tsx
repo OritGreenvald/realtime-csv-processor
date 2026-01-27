@@ -1,27 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import JobUpload from './components/JobUpload';
-import JobList from './components/JobList';
-import JobDetails from './components/JobDetails';
-import { initSocket } from './services/socket';
+import JobsList from   './components/JobList';
 
 const App: React.FC = () => {
-  const [selectedJobId, setSelectedJobId] = useState<string | null>(null);
-
-  useEffect(() => {
-    initSocket();
-  }, []);
+  const [latestJobId, setLatestJobId] = useState<string | null>(null);
 
   return (
-    <div style={{ display: 'flex', gap: '2rem' }}>
-      <div>
-        <JobUpload onJobCreated={setSelectedJobId} />
-      </div>
-      <div>
-        <JobList onSelectJob={setSelectedJobId} />
-      </div>
-      <div>
-        {selectedJobId && <JobDetails jobId={selectedJobId} />}
-      </div>
+    <div style={{ padding: '20px' }}>
+      <JobUpload onJobCreated={setLatestJobId} />
+      <JobsList />
     </div>
   );
 };

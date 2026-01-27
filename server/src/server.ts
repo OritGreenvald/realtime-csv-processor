@@ -20,18 +20,21 @@ io.on('connection', (socket) => {
     socket.join(jobId);
     console.log(`Client joined room: ${jobId}`);
   });
+
+  socket.on('newJob', (jobId: string) => {
+    io.emit('refreshJobs', { jobId });
+  });
 });
 
 app.use(cors());
 app.use(express.json());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-
 app.use('/api/jobs', jobRoutes);
 
-// Database
 mongoose.connect('mongodb://127.0.0.1:27017/csv_jobs')
   .then(() => console.log('MongoDB connected ✅'))
   .catch(err => console.error(err));
 
 server.listen(3000, () => console.log('Server running on port 3000'));
+
 export { io };

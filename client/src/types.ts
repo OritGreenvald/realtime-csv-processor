@@ -1,32 +1,31 @@
+export interface ErrorRow {
+  rowNumber: number;
+  name: string;
+  email: string;
+  phone: string;
+  company: string;
+  error: string;
+}
+
 export interface Job {
   _id: string;
   filename: string;
-  status: string;
+  status: 'pending' | 'processing' | 'completed' | 'failed';
   totalRows: number;
   processedRows: number;
   successCount: number;
   failedCount: number;
-  errorList: { row: number; error: string }[];
+  errorList: ErrorRow[];
   createdAt: string;
-  completedAt: string | null;
+  completedAt?: string;
 }
+
 
 export interface JobProgress {
-  processedRows: number;
-  successCount: number;
-  failedCount: number;
-  errorList: { row: number; error: string }[];
+  processed: number;
+  success: number;
+  failed: number;
+  total: number;
+  errorList?: ErrorRow[];
 }
 
-export interface JobFailed {
-  error: string;
-}
-
-export interface JobError {
-  row: number;
-  error: string;
-}
-
-export interface UploadResponse {
-  jobId: string;
-}

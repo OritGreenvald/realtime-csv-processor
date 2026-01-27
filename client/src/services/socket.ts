@@ -1,14 +1,12 @@
 import { io as socketIOClient, Socket } from 'socket.io-client';
+import { JobProgress } from '../types';
 
-const SOCKET_URL = process.env.REACT_APP_SOCKET_URL;
-export let socket: Socket;
+const SOCKET_URL = 'http://localhost:3000';
 
-export const initSocket = () => {
-  socket = socketIOClient(SOCKET_URL);
-};
+export const socket: Socket = socketIOClient(SOCKET_URL);
 
 export const joinJobRoom = (jobId: string) => {
-  if (socket) {
-    socket.emit('joinJob', jobId);
-  }
+  socket.emit('joinJobRoom', jobId);
 };
+
+
