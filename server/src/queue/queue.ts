@@ -1,4 +1,6 @@
 import { processCSVFile } from '../services/jobsService';
+import { QueueJob } from './queue';
+
 
 export interface QueueJob {
   jobId: string;
