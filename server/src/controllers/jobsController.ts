@@ -48,25 +48,6 @@ export const getAllJobs = async (req: Request, res: Response) => {
   }
 };
 
-export const getErrorReport = async (req: Request, res: Response) => {
-  try {
-    const job = await Job.findById(req.params.id);
-    if (!job) return res.status(404).json({ message: 'Job not found' });
-
-    const headers = ['rowNumber', 'name', 'email', 'phone', 'company', 'error'];
-    const csv = [
-      headers.join(','),
-      ...job.errorList.map(e => [e.rowNumber, e.name, e.email, e.phone, e.company, e.error].join(','))
-    ].join('\n');
-
-    res.header('Content-Type', 'text/csv');
-    res.attachment(`job-${req.params.id}-errors.csv`);
-    res.send(csv);
-  } catch (err) {
-    res.status(500).json({ message: 'Server error' });
-  }
-};
-
 export const downloadErrorReport = async (req: Request, res: Response) => {
   const job = await Job.findById(req.params.id);
 
