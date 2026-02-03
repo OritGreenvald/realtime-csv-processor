@@ -24,7 +24,7 @@ class JobQueue {
 
     try {
       console.log('Running job:', job.jobId);
-      await processCSVFile(job.jobId, job.filePath);
+     await startWorker(job);
     } catch (err) {
       console.error('Queue error:', err);
     }
